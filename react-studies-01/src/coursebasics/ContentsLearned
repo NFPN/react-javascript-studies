@@ -1,0 +1,14 @@
+---------------- Getting started -------------------
+studyBasics.js
+
+----- React basics & Working with components  ------
+React Core Syntax & JSX
+Working with Components
+Working with Data
+
+-------- React State & Working with Events  --------
+Handling Events
+Updating the UI & working with "State"
+A closer look at Components & State
+Two way binding
+Child-to-Parent component comunication
