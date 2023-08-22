@@ -5,5 +5,7 @@
 ### Topics
  - Basic react study
  - Food ordering web app
- - Chrome extension: pomodoro timer + task list
+ - Chrome extension:
+     - pomodoro timer + task list
+     - react extension (with webpack)
 
