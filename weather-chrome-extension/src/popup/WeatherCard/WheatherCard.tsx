@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { OpenWeatherData, fetchOpenWeatherData } from "../../Utils/api";
+import {
+    OpenWeatherData,
+    OpenWeatherTempScale,
+    fetchOpenWeatherData,
+} from "../../Utils/api";
 import {
     Box,
     Button,
@@ -33,19 +37,20 @@ type WeatherCardState = "loading" | "error" | "ready";
 
 const WeatherCard: React.FC<{
     city: string;
+    tempScale: OpenWeatherTempScale;
     onDelete?: () => void;
-}> = ({ city, onDelete }) => {
+}> = ({ city, tempScale, onDelete }) => {
     const [weatherData, setWeatherData] = useState<OpenWeatherData>(null);
     const [cardState, setCardState] = useState<WeatherCardState>("loading");
 
     useEffect(() => {
-        fetchOpenWeatherData(city)
+        fetchOpenWeatherData(city, tempScale)
             .then((data) => {
                 setWeatherData(data);
                 setCardState("ready");
             })
             .catch((err) => setCardState("error"));
-    }, [city]);
+    }, [city, tempScale]);
 
     if (cardState === "loading" || cardState === "error") {
         return (
@@ -59,14 +64,18 @@ const WeatherCard: React.FC<{
         );
     }
 
+    const degree = tempScale === "metric" ? "\u2103" : "\u2109";
+
     return (
         <WeatherCardContainer onDelete={onDelete}>
             <Typography variant="h5">{weatherData.name}</Typography>
             <Typography variant="body1">
                 {Math.round(weatherData.main.temp)}
+                {degree}
             </Typography>
             <Typography variant="body1">
                 Feels Like: {Math.round(weatherData.main.feels_like)}
+                {degree}
             </Typography>
         </WeatherCardContainer>
     );
