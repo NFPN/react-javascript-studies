@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { Add as AddIcon } from "@material-ui/icons";
 import "./popup.css";
-import WeatherCard from "./WeatherCard";
+import WeatherCard from "../components/WeatherCard";
 import "fontsource-roboto";
 import { Box, Grid, IconButton, InputBase, Paper } from "@material-ui/core";
 import {
