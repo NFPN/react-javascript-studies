@@ -8,6 +8,7 @@ import {
     Card,
     CardContent,
     Grid,
+    Switch,
     TextField,
     Typography,
 } from "@material-ui/core";
@@ -15,7 +16,7 @@ import {
     LocalStorageOptions,
     getStoredOptions,
     setStoredOptions,
-} from "../Utils/storage";
+} from "../utils/storage";
 
 type FormState = "ready" | "saving";
 
@@ -31,6 +32,13 @@ const App: React.FC<{}> = () => {
         setOptions({
             ...options,
             homeCity,
+        });
+    };
+
+    const handleAutoOverlayChange = (hasAutoOverlay: boolean) => {
+        setOptions({
+            ...options,
+            hasAutoOverlay,
         });
     };
 
@@ -72,6 +80,19 @@ const App: React.FC<{}> = () => {
                                 }
                                 disabled={isFieldDisabled}
                             ></TextField>
+                        </Grid>
+                        <Grid item>
+                            <Typography variant="body1">
+                                Auto-Ovelay on page load
+                            </Typography>
+                            <Switch
+                                color="primary"
+                                checked={options.hasAutoOverlay}
+                                onChange={(event, checked) =>
+                                    handleAutoOverlayChange(checked)
+                                }
+                                disabled={isFieldDisabled}
+                            />
                         </Grid>
                         <Grid item>
                             <Button

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import { Add as AddIcon } from "@material-ui/icons";
+import {
+    Add as AddIcon,
+    PictureInPicture as PicInPicIcon,
+} from "@material-ui/icons";
 import "./popup.css";
 import WeatherCard from "../components/WeatherCard";
 import "fontsource-roboto";
@@ -11,7 +14,8 @@ import {
     getStoredOptions,
     setStoredCities,
     setStoredOptions,
-} from "../Utils/storage";
+} from "../utils/storage";
+import { Messages } from "../utils/message";
 
 const App: React.FC<{}> = () => {
     const [cities, setCities] = useState<string[]>([]);
@@ -52,6 +56,22 @@ const App: React.FC<{}> = () => {
         });
     };
 
+    const handleOverlayButton = () => {
+        chrome.tabs.query(
+            {
+                active: true,
+            },
+            (tabs) => {
+                if (tabs.length > 0) {
+                    chrome.tabs.sendMessage(
+                        tabs[0].id,
+                        Messages.TOGGLE_OVERLAY
+                    );
+                }
+            }
+        );
+    };
+
     if (!options) {
         return null;
     }
@@ -82,6 +102,15 @@ const App: React.FC<{}> = () => {
                                 {options.tempScale === "metric"
                                     ? "\u2103"
                                     : "\u2109"}
+                            </IconButton>
+                        </Box>
+                    </Paper>
+                </Grid>
+                <Grid item>
+                    <Paper>
+                        <Box py="4px">
+                            <IconButton onClick={handleOverlayButton}>
+                                <PicInPicIcon />
                             </IconButton>
                         </Box>
                     </Paper>
