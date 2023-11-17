@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import WeatherCard from "../components/WeatherCard";
 import "./contentScript.css";
-import { Card } from "@material-ui/core";
+import { Box, Card } from "@material-ui/core";
 import { LocalStorageOptions, getStoredOptions } from "../utils/storage";
 import { Messages } from "../utils/message";
 
@@ -33,12 +33,13 @@ const App: React.FC<{}> = () => {
         <>
             {isActive && (
                 <Card className="overlayCard">
-                    <WeatherCard
-                        city={options.homeCity}
-                        tempScale={options.tempScale}
-                        onDelete={() => setIsActive(false)}
-                    />
-                    ;
+                    <Box mx="5px" my="20px">
+                        <WeatherCard
+                            city={options.homeCity}
+                            tempScale={options.tempScale}
+                            onDelete={() => setIsActive(false)}
+                        />
+                    </Box>
                 </Card>
             )}
         </>

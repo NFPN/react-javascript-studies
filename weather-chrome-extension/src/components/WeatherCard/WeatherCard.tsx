@@ -4,6 +4,7 @@ import {
     OpenWeatherData,
     OpenWeatherTempScale,
     fetchOpenWeatherData,
+    getWeatherIconSrc,
 } from "../../utils/api";
 import {
     Box,
@@ -11,6 +12,7 @@ import {
     Card,
     CardActions,
     CardContent,
+    Grid,
     Typography,
 } from "@material-ui/core";
 
@@ -19,7 +21,7 @@ const WeatherCardContainer: React.FC<{
     onDelete?: () => void;
 }> = ({ children, onDelete }) => {
     return (
-        <Box mx={"4px"} my={"16px"}>
+        <Box mx={"5px"} my={"20px"}>
             <Card>
                 <CardContent>{children}</CardContent>
                 <CardActions>
@@ -72,17 +74,35 @@ const WeatherCard: React.FC<{
 
     return (
         <WeatherCardContainer onDelete={onDelete}>
-            <Typography className="weatherCard-title">
-                {weatherData.name}
-            </Typography>
-            <Typography className="weatherCard-body">
-                {Math.round(weatherData.main.temp)}
-                {degree}
-            </Typography>
-            <Typography className="weatherCard-body">
-                Feels Like: {Math.round(weatherData.main.feels_like)}
-                {degree}
-            </Typography>
+            <Grid container justifyContent="space-around">
+                <Grid item>
+                    <Typography className="weatherCard-title">
+                        {weatherData.name}
+                    </Typography>
+                    <Typography className="weatherCard-temp">
+                        {Math.round(weatherData.main.temp)}
+                        {degree}
+                    </Typography>
+                    <Typography className="weatherCard-body">
+                        Feels Like {Math.round(weatherData.main.feels_like)}
+                        {degree}
+                    </Typography>
+                </Grid>
+                <Grid item>
+                    {weatherData.weather.length > 0 && (
+                        <>
+                            <img
+                                src={getWeatherIconSrc(
+                                    weatherData.weather[0].icon
+                                )}
+                            />
+                            <Typography className="weatherCard-body">
+                                {weatherData.weather[0].main}
+                            </Typography>
+                        </>
+                    )}
+                </Grid>
+            </Grid>
         </WeatherCardContainer>
     );
 };
